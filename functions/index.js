@@ -4,11 +4,11 @@ const nodemailer = require('nodemailer')
 const express = require('express')
 const cors = require('cors')
 
-/*
+
 require('dotenv').config({
     path: '../.env',
 });
-*/
+
 admin.initializeApp(functions.config().firebase)
 
 const app = express();
