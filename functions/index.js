@@ -4,15 +4,16 @@ const nodemailer = require('nodemailer')
 const express = require('express')
 const cors = require('cors')
 
-
-require('dotenv').config({
-    path: '../.env',
-});
-
-admin.initializeApp(functions.config().firebase)
-
 const app = express();
-app.use(cors({origin: true}));
+
+app.use(cors(
+    {
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204
+    }
+));
 
 app.post('/', (req, res) => {
     const {body} = req;
@@ -31,12 +32,12 @@ app.post('/', (req, res) => {
     })
 
     const mailOptions = {
-        from: process.env.EMAIL,
+        from: "gilbertsahumada@gmail.com",
         to: body.to,
         subject: body.subject,
         text: body.message
     };
-
+    
     transporter.sendMail(mailOptions, (err, data) => {
         if(err){
             return res.status(500).send({ message: "error " + err.message})
@@ -44,6 +45,8 @@ app.post('/', (req, res) => {
 
         return res.send({message: "email enviado satisfactoriamente"});
     });
+    
+    return res.send({message: "email enviado satisfactoriamente" });
 
 });
 
